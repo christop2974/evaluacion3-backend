@@ -1,0 +1,20 @@
+{% load static %}
+<article class="property-card h-100">
+    <div class="property-image-wrap">
+        {% if p.imagen %}<img src="{% static p.imagen %}" class="property-img" alt="{{ p.titulo }}">{% else %}<div class="property-placeholder">PNK</div>{% endif %}
+        <span class="property-badge">{{ p.operacion }}</span>
+        {% if p.destacada %}<span class="featured-badge">Destacada</span>{% endif %}
+    </div>
+    <div class="p-4 d-flex flex-column h-auto">
+        <span class="property-type">{{ p.tipo }}</span>
+        <h3 class="property-title">{{ p.titulo }}</h3>
+        <p class="property-location">{{ p.comuna }}{% if p.sector %} · {{ p.sector }}{% endif %}</p>
+        <div class="price-row"><strong>{{ p.precio_formateado }}</strong><span>CLP</span></div>
+        <div class="property-meta"><span>{{ p.dormitorios }} dorm.</span><span>{{ p.banos }} baños</span><span>{{ p.superficie }} m²</span></div>
+        <div class="card-actions mt-4">
+            <a href="{% url 'detalle' p.id %}" class="btn btn-dark flex-grow-1">Ver detalle</a>
+            <a href="{% url 'editar' p.id %}" class="btn btn-outline-dark" title="Modificar">Modificar</a>
+            <a href="{% url 'eliminar' p.id %}" class="btn btn-outline-danger" title="Eliminar">Eliminar</a>
+        </div>
+    </div>
+</article>

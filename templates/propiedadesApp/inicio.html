@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<h2>Bienvenido a PNK Inmobiliaria</h2>
+
+<p>En esta página puedes revisar algunas propiedades disponibles y consejos relacionados con el mundo inmobiliario.</p>
+
+<p>
+    <a href="{% url 'propiedades' %}" class="btn btn-secondary">
+        Ver propiedades
+    </a>
+</p>
+
+<hr>
+
+<h3>Propiedades destacadas</h3>
+
+<div class="row">
+    {% for propiedad in destacadas %}
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <img src="{% static propiedad.imagen %}" class="card-img-top" alt="{{ propiedad.nombre }}">
+            <div class="card-body">
+                <h5>{{ propiedad.nombre }}</h5>
+                <p>{{ propiedad.comuna }}</p>
+                <p><strong>{{ propiedad.precio }}</strong></p>
+                <button class="btn btn-outline-secondary btn-sm"
+                        data-favorito-id="{{ propiedad.id }}"
+                        onclick="toggleFavorito({{ propiedad.id }}, '{{ propiedad.nombre|escapejs }}')">
+                    Agregar a favoritos
+                </button>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No hay propiedades disponibles.</p>
+    {% endfor %}
+</div>
+{% endblock %}

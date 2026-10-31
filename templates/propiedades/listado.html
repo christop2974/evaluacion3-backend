@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Propiedades | PNK Inmobiliaria{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container py-5"><span class="eyebrow">CATÁLOGO PNK</span><h1 class="display-5 fw-bold mt-2">Encuentra tu próximo espacio</h1><p class="lead mb-0">Filtra y revisa propiedades almacenadas en la base de datos.</p></div></section>
+<section class="container py-5">
+    <div class="filter-panel mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-3"><div><span class="small-label">BUSCAR</span><h4 class="fw-bold mb-0">Encuentra una propiedad</h4></div><a class="btn btn-gold" href="{% url 'crear' %}">+ Agregar</a></div>
+        <form method="get" class="row g-3">
+            <div class="col-lg-4"><label class="form-label">Buscar</label><input class="form-control" name="q" value="{{ request.GET.q }}" placeholder="Comuna, sector, título..."></div>
+            <div class="col-md-4 col-lg-2"><label class="form-label">Tipo</label><select name="tipo" class="form-select"><option value="">Todos</option>{% for value,label in tipos %}<option value="{{ value }}" {% if request.GET.tipo == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+            <div class="col-md-4 col-lg-2"><label class="form-label">Operación</label><select name="operacion" class="form-select"><option value="">Todas</option>{% for value,label in operaciones %}<option value="{{ value }}" {% if request.GET.operacion == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+            <div class="col-md-4 col-lg-2"><label class="form-label">Comuna</label><input name="comuna" class="form-control" value="{{ request.GET.comuna }}" placeholder="Ej. Coquimbo"></div>
+            <div class="col-md-12 col-lg-2 d-flex align-items-end"><button class="btn btn-dark w-100" type="submit">Buscar</button></div>
+        </form>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-4"><h2 class="fw-bold mb-0">Resultados</h2><span class="results-count">{{ propiedades|length }} encontrados</span></div>
+    <div class="row g-4">
+        {% for p in propiedades %}<div class="col-md-6 col-lg-4">{% include 'propiedades/card.html' %}</div>{% empty %}<div class="col-12"><div class="empty-state"><h4>No encontramos propiedades</h4><p class="mb-0">Prueba cambiando los filtros de búsqueda.</p></div></div>{% endfor %}
+    </div>
+</section>
+{% endblock %}

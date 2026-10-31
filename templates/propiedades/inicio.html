@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Inicio | PNK Inmobiliaria{% endblock %}
+{% block content %}
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container position-relative py-5">
+        <div class="row align-items-center hero-row">
+            <div class="col-lg-7 text-white">
+                <span class="eyebrow">PNK INMOBILIARIA · TU ESPACIO, TU HISTORIA</span>
+                <h1 class="display-3 fw-bold mt-3">Encuentra un lugar que se sienta como <span class="gold-text">hogar.</span></h1>
+                <p class="hero-copy mt-4">Explora propiedades, compara alternativas y solicita una visita de forma sencilla.</p>
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <a href="{% url 'propiedades' %}" class="btn btn-gold btn-lg">Explorar propiedades</a>
+                    <a href="{% url 'asesoria' %}" class="btn btn-outline-light btn-lg">Hablar con un asesor</a>
+                </div>
+                <div class="hero-mini-stats mt-5">
+                    <div><strong>{{ total }}</strong><span>propiedades</span></div>
+                    <div><strong>100%</strong><span>orientación</span></div>
+                    <div><strong>24/7</strong><span>información</span></div>
+                </div>
+            </div>
+            <div class="col-lg-5 mt-5 mt-lg-0">
+                <div class="hero-search-card">
+                    <span class="small-label">BUSCA TU PRÓXIMO ESPACIO</span>
+                    <h3 class="fw-bold mt-2">¿Dónde quieres vivir?</h3>
+                    <p class="text-muted">Busca por comuna, sector o nombre.</p>
+                    <form action="{% url 'propiedades' %}" method="get" class="mt-4">
+                        <div class="input-group input-group-lg">
+                            <input name="q" class="form-control" placeholder="Ej. Coquimbo, Vicuña...">
+                            <button class="btn btn-dark" type="submit">Buscar</button>
+                        </div>
+                    </form>
+                    <div class="search-shortcuts mt-4">
+                        <a href="{% url 'propiedades' %}?operacion=Venta">En venta</a>
+                        <a href="{% url 'propiedades' %}?operacion=Arriendo">En arriendo</a>
+                        <a href="{% url 'crear' %}">Publicar propiedad</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="section-heading d-flex justify-content-between align-items-end gap-3 mb-4">
+        <div><span class="small-label">SELECCIÓN PNK</span><h2 class="fw-bold mt-1">Propiedades destacadas</h2><p class="text-muted mb-0">Datos cargados desde la base de datos mediante Django ORM.</p></div>
+        <a href="{% url 'propiedades' %}" class="btn btn-outline-dark d-none d-md-inline-block">Ver todas →</a>
+    </div>
+    <div class="row g-4">
+        {% for p in destacadas %}
+        <div class="col-md-6 col-lg-4">{% include 'propiedades/card.html' %}</div>
+        {% empty %}
+        <div class="col-12"><div class="empty-state">Todavía no hay propiedades. Agrega la primera desde el panel.</div></div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="feature-strip">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-md-4"><div class="service-box"><span>01</span><h4>Propiedades</h4><p>Listado, filtros y detalle de propiedades administradas con ORM.</p></div></div>
+            <div class="col-md-4"><div class="service-box"><span>02</span><h4>Asesoría</h4><p>Información útil para acompañar el proceso inmobiliario.</p></div></div>
+            <div class="col-md-4"><div class="service-box"><span>03</span><h4>Visitas</h4><p>Solicita una visita y registra tus datos para seguimiento.</p></div></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

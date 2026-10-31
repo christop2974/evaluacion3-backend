@@ -1,0 +1,6 @@
+[
+  {"id":1,"titulo":"Define tu presupuesto","descripcion":"Antes de buscar una propiedad, calcula cuánto puedes invertir y considera gastos adicionales."},
+  {"id":2,"titulo":"Revisa la ubicación","descripcion":"Evalúa conectividad, servicios, seguridad y cercanía a los lugares importantes para ti."},
+  {"id":3,"titulo":"Visita la propiedad","descripcion":"Observa el estado general y resuelve tus dudas antes de tomar una decisión."},
+  {"id":4,"titulo":"Compara alternativas","descripcion":"Revisa varias propiedades para identificar la opción que mejor se adapta a tus necesidades."}
+]

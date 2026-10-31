@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}Consejos | PNK{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container py-5"><span class="eyebrow">GUÍA PNK</span><h1 class="display-5 fw-bold mt-2">Consejos inmobiliarios</h1><p class="lead mb-0">Contenido administrable y almacenado en la base de datos mediante Django ORM.</p></div></section>
+<section class="container py-5"><div class="row g-4">{% for consejo in consejos %}<div class="col-md-6"><article class="advice-card h-100"><div class="advice-number">{{ forloop.counter|stringformat:'02d' }}</div><h3 class="fw-bold">{{ consejo.titulo }}</h3><p class="text-muted mb-0">{{ consejo.descripcion }}</p></article></div>{% empty %}<div class="col-12"><div class="empty-state">No hay consejos activos registrados.</div></div>{% endfor %}</div></section>
+{% endblock %}

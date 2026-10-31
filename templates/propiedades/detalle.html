@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ propiedad.titulo }} | PNK{% endblock %}
+{% block content %}
+<section class="container py-5">
+    <a href="{% url 'propiedades' %}" class="back-link">← Volver al listado</a>
+    <div class="row g-5 mt-2">
+        <div class="col-lg-8">
+            <div class="detail-image-wrap">
+                {% if propiedad.imagen %}<img src="{% static propiedad.imagen %}" class="detail-img" alt="{{ propiedad.titulo }}">{% else %}<div class="detail-placeholder">PNK</div>{% endif %}
+            </div>
+            <div class="mt-4"><span class="property-badge position-static">{{ propiedad.operacion }}</span><span class="property-type ms-2">{{ propiedad.tipo }}</span><h1 class="display-6 fw-bold mt-3">{{ propiedad.titulo }}</h1><p class="property-location fs-5">{{ propiedad.comuna }}{% if propiedad.sector %} · {{ propiedad.sector }}{% endif %}</p><div class="price-row detail-price"><strong>{{ propiedad.precio_formateado }}</strong><span>CLP</span></div></div>
+            <div class="detail-features my-4"><div><strong>{{ propiedad.dormitorios }}</strong><span>Dormitorios</span></div><div><strong>{{ propiedad.banos }}</strong><span>Baños</span></div><div><strong>{{ propiedad.superficie }}</strong><span>m²</span></div></div>
+            <h3 class="fw-bold">Descripción</h3><p class="text-muted detail-description">{{ propiedad.descripcion|default:'Información de la propiedad disponible en el sistema.'|linebreaks }}</p>
+            <div class="action-bar mt-4"><a href="{% url 'editar' propiedad.id %}" class="btn btn-outline-dark">Modificar</a><a href="{% url 'eliminar' propiedad.id %}" class="btn btn-outline-danger">Eliminar</a><a href="{% url 'propiedades' %}" class="btn btn-dark">Buscar otras</a></div>
+        </div>
+        <div class="col-lg-4">
+            <div class="contact-card sticky-lg-top">
+                <span class="small-label">AGENDA UNA VISITA</span><h3 class="fw-bold mt-2">¿Quieres conocerla?</h3><p class="text-muted">Registra tus datos y la solicitud quedará almacenada para su administración.</p>
+                <form method="post" class="mt-4">{% csrf_token %}{% for field in form %}<div class="mb-3"><label class="form-label">{{ field.label }}</label>{{ field }}{% if field.errors %}<div class="text-danger small mt-1">{{ field.errors|striptags }}</div>{% endif %}</div>{% endfor %}<button class="btn btn-gold w-100 btn-lg">Solicitar visita</button></form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

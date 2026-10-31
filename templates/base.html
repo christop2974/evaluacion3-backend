@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PNK Inmobiliaria - propiedades, asesoría y gestión inmobiliaria.">
+    <title>{% block title %}PNK Inmobiliaria{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark site-nav sticky-top">
+    <div class="container py-2">
+        <a class="navbar-brand brand" href="{% url 'inicio' %}">
+            <span class="brand-mark">PNK</span>
+            <span>INMOBILIARIA</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navPrincipal" aria-label="Abrir navegación">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navPrincipal">
+            <div class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+                <a class="nav-link" href="{% url 'propiedades' %}">Propiedades</a>
+                <a class="nav-link" href="{% url 'asesoria' %}">Asesoría</a>
+                <a class="nav-link" href="{% url 'consejos' %}">Consejos</a>
+                {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'dashboard' %}">Mi panel</a>
+                    <a class="nav-link" href="{% url 'panel' %}">Propiedades</a>
+                    <a class="nav-link" href="{% url 'consejos_gestion' %}">Mantenedor consejos</a>
+                    <a class="nav-link" href="{% url 'visitas_gestion' %}">Solicitudes</a>
+                    {% if user.is_superuser or user.is_staff %}<a class="nav-link" href="{% url 'usuarios' %}">Usuarios</a>{% endif %}
+                    <form method="post" action="{% url 'logout' %}" class="d-inline">{% csrf_token %}<button class="btn btn-outline-light btn-sm ms-lg-2" type="submit">Cerrar sesión</button></form>
+                {% else %}
+                    <a class="btn btn-gold ms-lg-2" href="{% url 'login' %}">Iniciar sesión</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+{% if messages %}
+<div class="container pt-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show shadow-sm" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<main>{% block content %}{% endblock %}</main>
+
+<footer class="site-footer mt-5">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <div class="brand text-white mb-3"><span class="brand-mark">PNK</span><span>INMOBILIARIA</span></div>
+                <p class="footer-text mb-0">Propiedades, orientación y acompañamiento para tomar decisiones inmobiliarias informadas.</p>
+            </div>
+            <div class="col-6 col-lg-3">
+                <h6>Navegación</h6>
+                <a href="{% url 'inicio' %}">Inicio</a>
+                <a href="{% url 'propiedades' %}">Propiedades</a>
+                <a href="{% url 'asesoria' %}">Asesoría</a>
+            </div>
+            <div class="col-6 col-lg-4">
+                <h6>Gestión</h6>
+                <a href="{% url 'login' %}">Acceso al sistema</a>
+                {% if user.is_authenticated %}<a href="{% url 'dashboard' %}">Dashboard</a>{% endif %}
+                <span class="footer-text">Proyecto académico · 2026</span>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom"><div class="container">PNK Inmobiliaria · Django + ORM + Bootstrap</div></div>
+</footer>
+
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
